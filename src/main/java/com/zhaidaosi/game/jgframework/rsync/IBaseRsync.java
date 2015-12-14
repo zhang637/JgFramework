@@ -1,29 +1,29 @@
 package com.zhaidaosi.game.jgframework.rsync;
 
-import com.zhaidaosi.game.jgframework.common.sdm.IBaseModel;
-
 import java.util.Map;
+
+import com.zhaidaosi.game.jgframework.common.sdm.IBaseModel;
 
 public interface IBaseRsync {
 
-    void addRsync(Integer id, IBaseModel obj);
+	void addRsync(Integer id, IBaseModel obj);
 
-    void runRsync();
+	void runRsync();
 
-    void setRsyncMap(Map<Integer, IBaseModel> map);
+	void setRsyncMap(Map<Integer, IBaseModel> map);
 
-    void clearRsyncMap();
+	void clearRsyncMap();
 
-    Map<Integer, IBaseModel> getNeedRsync();
+	Map<Integer, IBaseModel> getNeedRsync();
 
-    IBaseModel get(Integer id);
+	IBaseModel get(Integer id);
 
-    void clearNeedRsync();
+	void clearNeedRsync();
 
-    boolean isRunning();
+	boolean isRunning();
 
-    void toRunning();
+	void toRunning();
 
-    void toStop();
+	void toStop();
 
 }

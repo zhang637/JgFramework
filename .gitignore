@@ -10,3 +10,6 @@
 .myeclipse/
 .idea/
 JgFramework.iml
+.classpath
+.project
+.settings/

@@ -1,76 +1,77 @@
 package com.zhaidaosi.game.jgframework.model.entity;
 
+import java.util.Map;
+
 import com.zhaidaosi.game.jgframework.model.BasePosition;
 import com.zhaidaosi.game.jgframework.model.action.IBaseAction;
 import com.zhaidaosi.game.jgframework.model.area.IBaseArea;
-import io.netty.channel.Channel;
 
-import java.util.Map;
+import io.netty.channel.Channel;
 
 public interface IBaseCharacter {
 
-    int getId();
+	int getId();
 
-    void setId(int id);
+	void setId(int id);
 
-    String getRoll();
+	String getRoll();
 
-    void setRoll(String roll);
+	void setRoll(String roll);
 
-    BasePosition gPosition();
+	BasePosition gPosition();
 
-    void sPosition(BasePosition position);
+	void sPosition(BasePosition position);
 
-    IBaseArea gArea();
+	IBaseArea gArea();
 
-    String getName();
+	String getName();
 
-    void setName(String name);
+	void setName(String name);
 
-    IBaseAction findActionById(int id);
+	IBaseAction findActionById(int id);
 
-    void addAction(IBaseAction action);
+	void addAction(IBaseAction action);
 
-    void setActions(Map<Integer, IBaseAction> actions);
+	void setActions(Map<Integer, IBaseAction> actions);
 
-    Map<Integer, IBaseAction> getActions();
+	Map<Integer, IBaseAction> getActions();
 
-    void removeAction(int id);
+	void removeAction(int id);
 
-    Channel gChannel();
+	Channel gChannel();
 
-    void sChannel(Channel channel);
+	void sChannel(Channel channel);
 
-    int getLevel();
+	int getLevel();
 
-    void setLevel(int level);
+	void setLevel(int level);
 
-    int getExperience();
+	int getExperience();
 
-    void setExperience(int experience);
+	void setExperience(int experience);
 
-    int getTotalHp();
+	int getTotalHp();
 
-    void setTotalHp(int totalHp);
+	void setTotalHp(int totalHp);
 
-    int getTotalMp();
+	int getTotalMp();
 
-    void setTotalMp(int totalMp);
+	void setTotalMp(int totalMp);
 
-    int getHp();
+	int getHp();
 
-    void setHp(int hp);
+	void setHp(int hp);
 
-    int getMp();
+	int getMp();
 
-    void setMp(int mp);
+	void setMp(int mp);
 
-    void logoutHook();
+	void logoutHook();
 
-    void loginHook();
+	void loginHook();
 
-    boolean isInQueue();
+	boolean isInQueue();
 
-    void setIsInQueue(boolean isInQueue);
+	void setIsInQueue(boolean isInQueue);
 
 }

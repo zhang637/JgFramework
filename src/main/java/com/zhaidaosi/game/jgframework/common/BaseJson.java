@@ -1,20 +1,19 @@
 package com.zhaidaosi.game.jgframework.common;
 
-import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+
 public class BaseJson {
+	private static final Logger log = LoggerFactory.getLogger(BaseJson.class);
 
-    private static final Logger log = LoggerFactory.getLogger(BaseJson.class);
+	public static <T> T JsonToObject(String jsonStr, Class<T> c) {
+		return JSON.parseObject(jsonStr, c);
+	}
 
-    public static <T> T JsonToObject(String jsonStr, Class<T> c) {
-        return JSON.parseObject(jsonStr, c);
-    }
+	public static String ObjectToJson(Object obj) {
+		return JSON.toJSONString(obj);
 
-    public static String ObjectToJson(Object obj) {
-        return JSON.toJSONString(obj);
-
-    }
-
+	}
 }
