@@ -5,26 +5,26 @@ import com.zhaidaosi.game.jgframework.model.action.IBaseAction;
 
 public interface IBaseEntity {
 
-    int getId();
+	int getId();
 
-    void setId(int id);
+	void setId(int id);
 
-    String getRoll();
+	String getRoll();
 
-    void setRoll(String roll);
+	void setRoll(String roll);
 
-    BasePosition getPosition();
+	BasePosition getPosition();
 
-    void setPosition(BasePosition position);
+	void setPosition(BasePosition position);
 
-    String getName();
+	String getName();
 
-    void setName(String name);
+	void setName(String name);
 
-    IBaseAction getAction(int id);
+	IBaseAction getAction(int id);
 
-    void addAction(IBaseAction action);
+	void addAction(IBaseAction action);
 
-    void removeAction(int id);
+	void removeAction(int id);
 
 }

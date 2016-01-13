@@ -179,7 +179,7 @@ public class ServiceConnector implements IBaseConnector {
 	class MyTimerTask extends TimerTask {
 		@Override
 		public void run() {
-			log.info("start sync ...");
+			log.debug("start sync ...");
 			RsyncManager.run();
 		}
 	}
@@ -211,14 +211,14 @@ public class ServiceConnector implements IBaseConnector {
 				IdleStateEvent event = (IdleStateEvent) evt;
 				if (event.state() == IdleState.READER_IDLE) {
 					/* 读超时 */
-					System.out.println("READER_IDLE 读超时");
+					log.info("READER_IDLE 读超时");
 					ctx.disconnect();
 				} else if (event.state() == IdleState.WRITER_IDLE) {
 					/* 写超时 */
-					System.out.println("WRITER_IDLE 写超时");
+					log.info("WRITER_IDLE 写超时");
 				} else if (event.state() == IdleState.ALL_IDLE) {
 					/* 总超时 */
-					System.out.println("ALL_IDLE 总超时");
+					log.info("ALL_IDLE 总超时");
 				}
 			}
 		}
@@ -230,7 +230,7 @@ public class ServiceConnector implements IBaseConnector {
 			}
 			player = Boot.getPlayerFactory().getPlayer();
 			player.sChannel(ctx.channel());
-			//zhangyoulei@ channel绑定了用户
+			// zhangyoulei@2015121 channel绑定了用户
 			ctx.channel().attr(IBaseConnector.PLAYER).set(player);
 		}
 
@@ -294,8 +294,10 @@ public class ServiceConnector implements IBaseConnector {
 				if (result != SessionManager.ADD_SESSION_ERROR) {
 					error = false;
 					if (result == SessionManager.ADD_SESSION_SUCC) {
+						// 成功添加session后，执行...
 						rs = Router.run(inMsg, ch);
 					} else {
+						// 返回等
 						rs = SessionManager.getWaitMessage(player);
 					}
 				}
@@ -355,5 +357,4 @@ public class ServiceConnector implements IBaseConnector {
 			return "ws://" + req.headers().get(HOST) + WEB_SOCKET_PATH;
 		}
 	}
-
 }

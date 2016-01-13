@@ -23,6 +23,6 @@ public abstract class BaseHandler implements IBaseHandler {
 	}
 
 	public static IBaseMessage doHeart() {
-		return OutMessage.showSucc("");
+		return OutMessage.showSucc("--BaseHandler.doHeart--");
 	}
 }

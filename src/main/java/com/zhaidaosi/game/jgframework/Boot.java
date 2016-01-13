@@ -78,7 +78,6 @@ public class Boot {
 		try {
 			Properties pps = new Properties();
 			pps.load(Boot.class.getClassLoader().getResourceAsStream(SERVER_PROPERTIES));
-
 			BASE_PACKAGE_NAME = pps.getProperty("base.package.name");
 			if (BaseString.isEmpty(BASE_PACKAGE_NAME)) {
 				error = true;
@@ -506,7 +505,6 @@ public class Boot {
 					managerConnector = new ManagerConnector(managerPort);
 				}
 				managerConnector.start();
-
 			}
 			if (args == null || args.equals(ALL_STRING) || args.equals(AUTH_STRING)) {
 				if (authConnector == null) {

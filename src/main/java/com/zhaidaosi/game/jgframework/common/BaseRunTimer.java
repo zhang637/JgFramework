@@ -42,7 +42,7 @@ public class BaseRunTimer {
 		if (active && log.isInfoEnabled()) {
 			List<String> timer = getTimer();
 			if (timer.size() > 0) {
-				String line = "**********************************************************************";
+				String line = "**********************************************";
 				String message = "\n" + line + "\n";
 				for (String msg : timer) {
 					message += "********** ";
@@ -63,5 +63,4 @@ public class BaseRunTimer {
 	public static void toActive() {
 		BaseRunTimer.active = true;
 	}
-
 }

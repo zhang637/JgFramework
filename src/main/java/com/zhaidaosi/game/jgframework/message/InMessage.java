@@ -62,5 +62,4 @@ public class InMessage implements IBaseMessage {
 	public Object getMember(String key) {
 		return p.get(key);
 	}
-
 }

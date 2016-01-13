@@ -9,6 +9,7 @@ public class BaseJson {
 	private static final Logger log = LoggerFactory.getLogger(BaseJson.class);
 
 	public static <T> T JsonToObject(String jsonStr, Class<T> c) {
+		log.info(jsonStr);
 		return JSON.parseObject(jsonStr, c);
 	}
 

@@ -23,7 +23,6 @@ import com.zhaidaosi.game.jgframework.model.entity.IBaseCharacter;
 import io.netty.channel.Channel;
 
 public class SessionManager {
-
 	public final static String SECRET = "secret";
 	public final static int ADD_SESSION_SUCC = 1;
 	public final static int ADD_SESSION_ERROR = -1;
@@ -31,18 +30,21 @@ public class SessionManager {
 
 	private static final Logger log = LoggerFactory.getLogger(SessionManager.class);
 	private static IBaseSecretFactory secretFactory = new BaseSecretFactory();
+	// userIdChannels 与 waitUserIdchannels区别是什么？
 	private static ConcurrentMap<Integer, Channel> userIdChannels = new ConcurrentHashMap<>();
 	private static ConcurrentMap<Integer, BaseQueueElement<Channel>> waitUserIdChannels = new ConcurrentHashMap<>();
 	private static BaseQueue<Channel> waitQueue = new BaseQueue<>();
 	private static Timer timer;
+	// 什么含义？？
 	private static int maxUser = 0;
 
 	public static int checkSession(InMessage msg, Channel ch) {
+		// zhangyoulei@20151221 读channel上绑定的数据
 		IBaseCharacter player = ch.attr(IBaseConnector.PLAYER).get();
 		if (player == null) {
 			return ADD_SESSION_ERROR;
 		}
-		if (player.getId() <= 0) {
+		if (player.getId() <= 0) {// 初始化playerid
 			Object secret = msg.getMember(SECRET);
 			if (secret == null || secret.equals("")) {
 				return ADD_SESSION_ERROR;
@@ -58,6 +60,7 @@ public class SessionManager {
 				return ADD_SESSION_ERROR;
 			}
 		}
+		// 返回排队状态
 		if (maxUser > 0 && player.isInQueue()) {
 			return ADD_SESSION_WAIT;
 		}
@@ -80,20 +83,24 @@ public class SessionManager {
 		Channel _ch = userIdChannels.get(userId);
 		BaseQueueElement<Channel> queueElement = null;
 		if (_ch == null && maxUser > 0) {
+			// 根据userid,取到元素
 			queueElement = waitUserIdChannels.get(userId);
 			if (queueElement != null) {
 				_ch = queueElement.getValue();
 			}
 		}
 
+		// ch绑定的资源发生了变化
 		boolean same = _ch != null && _ch.hashCode() == ch.hashCode();
-
+		// 同一个userid对应channel不同
 		if (_ch != null && !same) {
 			IBaseCharacter _player = _ch.attr(IBaseConnector.PLAYER).get();
 			if (_player != null) {
+				// id为0，代表了什么？
 				_player.setId(0);
 				// 保持排队名次
 				if (queueElement != null) {
+					// inqueue，代表什么含义？？
 					player.setIsInQueue(true);
 					queueElement.setValue(ch);
 				}
@@ -106,6 +113,7 @@ public class SessionManager {
 				return ADD_SESSION_WAIT;
 			} else if (userIdChannels.size() >= maxUser) {
 				player.setIsInQueue(true);
+				// 注意basequene与basequeneelement的区别
 				BaseQueueElement<Channel> element = waitQueue.put(ch);
 				if (_ch == null || !same) {
 					waitUserIdChannels.put(userId, element);
@@ -229,13 +237,14 @@ public class SessionManager {
 			BaseQueueElement<Channel> queueElement = waitUserIdChannels.get(player.getId());
 			index = waitQueue.findIndex(queueElement);
 		}
-		return OutMessage.showSucc(index, Router.WAIT_HANDLERNAME);
+		return OutMessage.showSucc(index, "#####" + Router.WAIT_HANDLERNAME + ")))");
 	}
 
 	private static class QueueTimerTask extends TimerTask {
 		@Override
 		public void run() {
 			try {
+				// 在线小于最大允许值，则将wait中的转化到在线
 				while (userIdChannels.size() < maxUser && waitQueue.size() > 0) {
 					BaseQueueElement<Channel> element = waitQueue.take();
 					if (element == null) {
@@ -254,6 +263,7 @@ public class SessionManager {
 						continue;
 					}
 					waitUserIdChannels.remove(userId);
+					// 标注不排队
 					player.setIsInQueue(false);
 					userIdChannels.put(userId, ch);
 					ch.write(getWaitMessage(player));

@@ -13,7 +13,6 @@ import com.zhaidaosi.game.jgframework.common.BaseRunTimer;
 import com.zhaidaosi.game.jgframework.common.sdm.IBaseModel;
 
 public class RsyncManager {
-
 	private static long serviceSyncPeriod;
 	private static final Logger log = LoggerFactory.getLogger(RsyncManager.class);
 	private static HashMap<Class<?>, IBaseRsync> rsyncMap;
@@ -95,6 +94,8 @@ public class RsyncManager {
 }
 
 class RsyncThread extends Thread {
+	private static final Logger log = LoggerFactory.getLogger(RsyncThread.class);
+
 	private IBaseRsync rsync;
 	private Map<Integer, IBaseModel> map;
 
@@ -104,6 +105,7 @@ class RsyncThread extends Thread {
 	}
 
 	public void run() {
+		log.info("--RsyncThread--");
 		rsync.toRunning();
 		rsync.setRsyncMap(map);
 		rsync.runRsync();
